@@ -1,0 +1,42 @@
+.buttonDelete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: lowercase;
+  background-color: #cec5bc;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #cec5bc;
+  cursor: pointer;
+  text-transform: inherit;
+  border: none;
+}
+
+.itemContact:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.everyItem {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 15px;
+  justify-content: space-between;
+  font-size: clamp(16px, 2vw, 20px);
+  align-items: center;
+}
+.everyItem > p {
+  float: left;
+  width: 40%;
+  padding: 5px;
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+}
+.everyItem > button,
+.everyItem > img {
+  width: 5%;
+  float: left;
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+}
