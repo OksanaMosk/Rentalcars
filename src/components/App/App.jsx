@@ -3,14 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { refreshThunk } from 'redux/auth/auth.reducer';
 import HomePage from 'pages/HomePage/HomePage';
-import ContactsPage from 'pages/ContactsPage/ContactsPage';
-import AddPage from 'pages/AddPage/AddPage';
+import CatalogPage from 'pages/CatalogPage/CatalogPage';
+import FavoritesPage from 'pages/FavoritesPage/FavoritesPage';
 import Layout from 'components/Layout/Layout';
 import Page404 from 'pages/Page404/Page404';
-import Login from 'pages/LoginPage/LoginPage';
-import Register from 'pages/RegisterPage/RegisterPage';
 import RestrictedRoute from './RestrictedRoute';
-import PrivateRoute from './PrivateRoute';
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
 import * as ROUTES from '../constants/routes';
 import { selectAuthenticated } from 'redux/auth/auth.selectors';
@@ -25,37 +22,22 @@ const appRoutes = [
     ),
   },
   {
-    path: ROUTES.ADD_ROUTE,
-    element: (
-      <PrivateRoute>
-        <AddPage />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: ROUTES.CONTACTS_ROUTE,
-    element: (
-      <PrivateRoute>
-        <ContactsPage />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: ROUTES.REGISTER_ROUTE,
+    path: ROUTES.FAVORITES_ROUTE,
     element: (
       <RestrictedRoute>
-        <Register />
+        <FavoritesPage />
       </RestrictedRoute>
     ),
   },
   {
-    path: ROUTES.LOGIN_ROUTE,
+    path: ROUTES.CATALOG_ROUTE,
     element: (
       <RestrictedRoute>
-        <Login />
+        <CatalogPage />
       </RestrictedRoute>
     ),
   },
+
   {
     path: ROUTES.ERROR_ROUTE,
 

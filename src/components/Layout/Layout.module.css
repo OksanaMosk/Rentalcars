@@ -1,132 +1,64 @@
 header {
-  background-color: #cec5bc;
-  position: relative;
+  background-color: white;
+  color: #495464;
   display: flex;
-  flex-wrap: wrap;
-  border: 1.5px solid #e6eaed;
-  border-radius: 20px;
-  margin: 30px 10px;
-  height: 200px;
-  cursor: pointer;
-  justify-content: center;
   align-items: center;
-  box-shadow: 10px 10px 7px 0px rgba(177, 185, 204, 0.12),
-    10px 10px 5px 0px rgba(177, 185, 204, 0.14),
-    10px 10px 5px 0px rgba(177, 185, 204, 0.12);
-  object-fit: cover;
-  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: fixed;
+  z-index: 1100;
+  height: 60px;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  margin: 0 auto;
+  width: 100%;
 }
-header:focus,
-header:hover {
-  transform: scale(1.03);
-}
-.menu {
+
+.mainTitleContainer {
   display: flex;
-  flex-wrap: wrap;
-  row-gap: 10px;
-  padding-bottom: 20px;
-  padding-left: 10px;
-  font-size: clamp(16px, 4vw, 20px);
+  justify-content: center;
+}
+
+.mainTit {
+  display: flex;
+  align-items: center;
 }
 
 .mainTitle {
-  position: relative;
-  display: block;
-  text-align: center;
-  font-size: clamp(28px, 4vw, 40px);
-  color: #6e6662;
-  text-transform: uppercase;
-  width: 100%;
-  line-height: 0.7em;
+  display: flex;
+  align-items: center;
+  font-size: 36px;
+  padding-left: 400px;
 }
-.mainTitle:hover,
-.mainTitle :focus {
-  color: #7584a3;
-}
-
-.title {
-  margin-right: 20px;
-  background-color: #af9e8e;
-  display: inline-flex;
-  text-decoration: none;
-  border: 1.5px solid #e6eaed;
-  border-radius: 15px;
-  width: 200px;
-  height: 22px;
-  margin-block-end: 0;
-  margin-block-start: 0;
+.mainTitle img {
+  display: flex;
   justify-content: center;
   align-items: center;
-  color: #e6eaed;
-  font-size: clamp(12px, 4vw, 20px);
-  transition: all 0.25s;
-  transition: all 0.25s allow-discrete;
-  font: inherit;
-  cursor: pointer;
 }
 
-.title:active,
-.title:hover,
-.title:focus {
-  background-color: #b1b9cc;
-  color: #9a8f89;
+.links {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  gap: 30px;
+  color: #495464;
+  padding: 0 0 0 30px;
 }
-.authorization {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-.titleAuthorization {
-  margin-left: 20px;
-  background-color: #af9e8e;
-  display: inline-flex;
-  text-decoration: none;
-  border: 1.5px solid #e6eaed;
-  border-radius: 15px;
-  width: 80px;
-  height: 22px;
-  margin-block-end: 0;
-  margin-block-start: 0;
-  justify-content: center;
+
+.toLink {
+  display: flex;
+  font-family: 'Montserrat', sans-serif;
+  justify-content: flex-start;
   align-items: center;
-  color: #e6eaed;
-  font-size: clamp(24px, 4vw, 30px);
-  transition: all 0.25s;
-  transition: all 0.25s allow-discrete;
-  font: inherit;
+  border-radius: 10px;
+  font-size: 18px;
+  text-decoration: none;
+  text-transform: capitalize;
   cursor: pointer;
 }
 
-.titleAuthorization:active,
-.titleAuthorization:hover,
-.titleAuthorization:focus {
-  background-color: #b1b9cc;
-  color: #9a8f89;
-}
-.logOutButton {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #af9e8e;
-  display: inline-flex;
-  text-decoration: none;
-  border: 1.5px solid #e6eaed;
-  border-radius: 15px;
-  width: 80px;
-  height: 22px;
-  margin-block-end: 0;
-  margin-block-start: 0;
-  color: #e6eaed;
-  font-size: 30px;
-  transition: all 0.25s;
-  transition: all 0.25s allow-discrete;
-  font: inherit;
-  cursor: pointer;
-}
-.nameLogOutButton {
-  position: absolute;
-  top: 10px;
-  right: 100px;
-  color: #6e6662;
-  font-size: clamp(12px, 1vw, 14px);
+.toLink:hover,
+.toLink:focus,
+.toLink:active {
+  color: #495464;
+  transition: all 0.3s allow-discrete;
 }
