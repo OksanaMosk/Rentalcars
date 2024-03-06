@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-// import { ContactList } from 'components/ContactList/ContactList';
+import { ContactList } from 'components/ContactList/ContactList';
 import { useLocation } from 'react-router-dom';
 import { Navigate, NavLink } from 'react-router-dom';
 // import Filter from 'components/Filter/Filter';
@@ -26,7 +26,9 @@ const CatalogPage = () => {
       >
         Go back
       </NavLink>
+      <ContactList />
       {isLoading && <Loader />}
+
       {/* {contacts.length !== 0 ? (
         <>
           <Filter />

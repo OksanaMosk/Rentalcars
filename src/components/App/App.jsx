@@ -1,69 +1,40 @@
 import { Route, Routes } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { refreshThunk } from 'redux/auth/auth.reducer';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { useEffect } from 'react';
+
 import HomePage from 'pages/HomePage/HomePage';
 import CatalogPage from 'pages/CatalogPage/CatalogPage';
 import FavoritesPage from 'pages/FavoritesPage/FavoritesPage';
 import Layout from 'components/Layout/Layout';
 import Page404 from 'pages/Page404/Page404';
-import RestrictedRoute from './RestrictedRoute';
+
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
 import * as ROUTES from '../constants/routes';
-import { selectAuthenticated } from 'redux/auth/auth.selectors';
 
 const appRoutes = [
   {
     path: ROUTES.HOME_ROUTE,
-    element: (
-      <RestrictedRoute>
-        <HomePage />
-      </RestrictedRoute>
-    ),
+    element: <HomePage />,
   },
   {
     path: ROUTES.FAVORITES_ROUTE,
-    element: (
-      <RestrictedRoute>
-        <FavoritesPage />
-      </RestrictedRoute>
-    ),
+    element: <FavoritesPage />,
   },
   {
     path: ROUTES.CATALOG_ROUTE,
-    element: (
-      <RestrictedRoute>
-        <CatalogPage />
-      </RestrictedRoute>
-    ),
+    element: <CatalogPage />,
   },
 
   {
     path: ROUTES.ERROR_ROUTE,
-
-    element: (
-      <RestrictedRoute>
-        <Page404 />
-      </RestrictedRoute>
-    ),
+    element: <Page404 />,
   },
   {
     path: ROUTES.NOTFOUNDPPAGE_ROUTE,
-
-    element: (
-      <RestrictedRoute>
-        <NotFoundPage />
-      </RestrictedRoute>
-    ),
+    element: <NotFoundPage />,
   },
 ];
 export const App = () => {
-  const authenticated = useSelector(selectAuthenticated);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(refreshThunk(authenticated));
-  }, [authenticated, dispatch]);
-
   return (
     <Layout>
       <Routes>
