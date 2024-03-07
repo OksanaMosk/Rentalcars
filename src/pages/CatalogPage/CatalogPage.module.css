@@ -1,9 +1,11 @@
 .contactsContainer {
+  margin-bottom: 80px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin: 0 auto 30px;
   width: 100%;
+  overflow: auto;
 }
 
 .goBack {
@@ -37,8 +39,7 @@
   display: flex;
   text-align: center;
   justify-content: center;
-  align-items: center;
-  margin: 0, auto;
+  margin-top: 62px;
 }
 
 .button {
@@ -51,4 +52,5 @@
   border: none;
   background-color: transparent;
   text-decoration: none;
+  margin: 100px auto 150px;
 }

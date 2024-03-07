@@ -1,0 +1,53 @@
+:root {
+  --font-family: 'Manrope', sans-serif;
+  --primary-text-color: #121417;
+  --about-text-color: rgba(18, 20, 23, 0.5);
+  --secondary-text-color: #3470ff;
+  --button-active: #0b44cd;
+}
+
+.footer {
+  margin: 0 auto;
+  display: flex;
+  background-color: rgb(18, 20, 23);
+  color: white;
+  position: fixed;
+  z-index: 0;
+  height: 80px;
+  width: 100%;
+  justify-content: center;
+  border-top: 0.2px solid rgba(18, 20, 23, 0.5);
+  left: 0;
+  bottom: 0;
+}
+
+/* .aboutUs {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 40px;
+}
+
+.aboutUsInfoLogo {
+  margin-bottom: 20px;
+}
+
+.footerNav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 14px;
+  font-size: 14px;
+  padding-bottom: 0;
+  row-gap: 40px;
+}
+
+.aboutUsInfo {
+}
+
+.navItem {
+  transition: all 0.3s;
+  row-gap: 24px;
+}
+.navItem:hover {
+} */

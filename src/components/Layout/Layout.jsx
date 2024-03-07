@@ -1,6 +1,7 @@
 // import { useDispatch } from 'react-redux';
 // import { useSelector } from 'react-redux';
 import { Header } from '../Header/Header';
+import { Footer } from '../Footer/Footer';
 
 // import { NavLink } from 'react-router-dom';
 // import { useLocation } from 'react-router-dom';
@@ -21,9 +22,10 @@ const Layout = ({ children }) => {
   // };
 
   return (
-    <div className={css.mainTitleContainer}>
+    <div className={css.container}>
       <Header />
       <main>{children}</main>
+      <Footer />
     </div>
   );
 };

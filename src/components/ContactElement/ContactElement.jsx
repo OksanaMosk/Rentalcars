@@ -5,8 +5,8 @@
 
 // import { selectContacts } from 'redux/contacts/contacts.selector';
 // import { useEffect } from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-
 import css from './ContactElement.module.css';
 
 export const ContactElement = ({
@@ -22,14 +22,22 @@ export const ContactElement = ({
   address,
 }) => {
   const partsOfAddress = address.split(', ');
-  // const partsOfAccessories = accessories.split(', ');
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
 
   return (
-    <li className={css.itemHome} key={id}>
+    <li
+      className={`${css.itemHome} ${imageLoaded ? css.imageLoaded : ''}`}
+      key={id}
+    >
       <div style={{ width: '274px', height: '268px', overflow: 'hidden' }}>
         <img
           src={img}
           alt={`Car ${id}`}
+          onLoad={handleImageLoad}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
       </div>
@@ -69,9 +77,6 @@ export const ContactElement = ({
           </p>
         )}
       </div>
-
-      {/* {isLoading && <LoaderSmall />}
-        {error !== null && <>{error}</>}  */}
 
       <NavLink className={css.button} key={id} to={`/buy/${id}`}>
         Learn more

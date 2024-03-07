@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 console.log('Before createAsyncThunk');
+
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
   async ({ page = 1, limit = 12 }, thunkApi) => {
@@ -10,7 +11,7 @@ export const fetchContacts = createAsyncThunk(
       const { data } = await axios.get(
         `https://65e85b1c4bb72f0a9c4f090a.mockapi.io/cars?limit=${limit}&page=${page}`
       );
-      console.log('data: ', data); // Вивести дані у консоль
+      console.log('data: ', data);
       return data;
     } catch (err) {
       return thunkApi.rejectWithValue(err.message);
