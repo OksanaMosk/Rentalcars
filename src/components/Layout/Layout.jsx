@@ -1,6 +1,8 @@
 // import { useDispatch } from 'react-redux';
 // import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Header } from '../Header/Header';
+
+// import { NavLink } from 'react-router-dom';
 // import { useLocation } from 'react-router-dom';
 // import { selectAuthenticated } from 'redux/auth/auth.selectors';
 // import { selectUserData } from 'redux/auth/auth.selectors';
@@ -20,34 +22,7 @@ const Layout = ({ children }) => {
 
   return (
     <div className={css.mainTitleContainer}>
-      <header>
-        <div className={css.links}>
-          <NavLink
-            className={css.toLink}
-            // state={{ from: location }}
-            to="/catalog"
-          >
-            Catalog
-          </NavLink>
-          <NavLink
-            className={css.toLink}
-            // state={{ from: location }}
-            to="/favorites"
-          >
-            Faforites cars
-          </NavLink>
-        </div>
-        <div className={css.mainTit}>
-          <h1 className={css.mainTitle}>
-            {/* <img
-              src={zillow}
-              alt="zillow"
-              style={{ width: '40px', height: '40px' }}
-            /> */}
-            Rentalcars
-          </h1>
-        </div>
-      </header>
+      <Header />
       <main>{children}</main>
     </div>
   );

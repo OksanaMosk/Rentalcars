@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { ContactList } from 'components/ContactList/ContactList';
 import { useLocation } from 'react-router-dom';
 import { Navigate, NavLink } from 'react-router-dom';
-// import Filter from 'components/Filter/Filter';
+import Filter from 'components/Filter/Filter';
 import Loader from 'components/Loader/Loader';
 import { useRef } from 'react';
 // import error1 from 'images/icons8-no-yelling-100.png';
@@ -26,12 +26,12 @@ const CatalogPage = () => {
       >
         Go back
       </NavLink>
+      <Filter />
       <ContactList />
       {isLoading && <Loader />}
-
       {/* {contacts.length !== 0 ? (
         <>
-          <Filter />
+       
 
           <ContactList />
         </>

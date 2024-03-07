@@ -40,39 +40,38 @@ export const ContactElement = ({
         />
       </div>
 
-      <div>
-        <p className={css.price}>{make}</p>
-        <p className={css.price}>{year}</p>
-        <p className={css.price}>{rentalPrice}</p>
+      <div className={css.titlePart}>
+        <h3 className={css.title}>
+          {make} {model && <span className={css.title}>{model},</span>} {year}
+        </h3>
+        <p className={css.title}>{rentalPrice}</p>
       </div>
 
-      <div className={css.everyItem}>
-        <div className={css.about}>
-          <p>{partsOfAddress[1]}</p>
-          <p>{partsOfAddress[2]}</p>
-          <p className={css.price}>{rentalCompany}</p>
-          <p className={css.price}>Premium</p>
-        </div>
+      <div className={css.aboutPart}>
+        <p>{partsOfAddress[1]}</p>
+        <p>{partsOfAddress[2]}</p>
+        <p className={css.price}>{rentalCompany}</p>
+        <p className={css.price}>Premium</p>
+      </div>
 
-        <div className={css.about}>
-          <p className={css.price}>{type}</p>
-          <p className={css.price}>{model}</p>
-          <p className={css.price}>{id}</p>
-          {Array.isArray(accessories) &&
-            accessories.slice(0, 1).map((item, index) => (
-              <p className={css.price} key={index}>
-                {item}
-              </p>
-            ))}
-        </div>
+      <div className={css.aboutPart}>
+        <p className={css.price}>{type}</p>
+        <p className={css.price}>{model}</p>
+        <p className={css.price}>{id}</p>
+        {Array.isArray(accessories) &&
+          accessories.slice(0, 1).map((item, index) => (
+            <p className={css.price} key={index}>
+              {item}
+            </p>
+          ))}
+      </div>
 
-        {/* {isLoading && <LoaderSmall />}
+      {/* {isLoading && <LoaderSmall />}
         {error !== null && <>{error}</>}  */}
 
-        <NavLink className={css.button} key={id} to={`/buy/${id}`}>
-          Learn more
-        </NavLink>
-      </div>
+      <NavLink className={css.button} key={id} to={`/buy/${id}`}>
+        Learn more
+      </NavLink>
     </li>
   );
 };

@@ -7,6 +7,7 @@ import CatalogPage from 'pages/CatalogPage/CatalogPage';
 import FavoritesPage from 'pages/FavoritesPage/FavoritesPage';
 import Layout from 'components/Layout/Layout';
 import Page404 from 'pages/Page404/Page404';
+import css from './App.module.css';
 
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
 import * as ROUTES from '../constants/routes';
@@ -36,7 +37,7 @@ const appRoutes = [
 ];
 export const App = () => {
   return (
-    <Layout>
+    <Layout className={css.layout}>
       <Routes>
         <Route path="*" element={<NotFoundPage />} />
         {appRoutes.map(({ path, element }) => (
