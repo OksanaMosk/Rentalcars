@@ -1,32 +1,32 @@
 .homeContainer {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .homeList {
-    width: 1192px;
-    font-weight: 400;
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    row-gap: 50px;
-    column-gap: calc((1184px - 274px * 4) / 3);
-    margin-inline-start: 0;
-    padding-inline-start: 0;
-    justify-content: center;
-    margin-block-end: 0;
-    margin-block-start: 0;
+  width: 1184px;
+  font-weight: 400;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 50px;
+  column-gap: calc((1184px - 274px * 4) / 3);
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+  justify-content: center;
+  margin-block-end: 0;
+  margin-block-start: 0;
 }
 
 .button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: underline;
-    text-decoration-skip-ink: none;
-    color: #3470ff;
-    border: none;
-    background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: #3470ff;
+  border: none;
+  background-color: transparent;
 }

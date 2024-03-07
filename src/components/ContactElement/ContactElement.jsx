@@ -16,15 +16,9 @@ export const ContactElement = ({
   model,
   type,
   img,
-  description,
-  fuelConsumption,
-  engineSize,
   accessories,
-  functionalities,
   rentalPrice,
   rentalCompany,
-  rentalConditions,
-  mileage,
   address,
 }) => {
   const partsOfAddress = address.split(', ');
@@ -48,22 +42,32 @@ export const ContactElement = ({
       </div>
 
       <div className={css.aboutPart}>
-        <p>{partsOfAddress[1]}</p>
-        <p>{partsOfAddress[2]}</p>
-        <p className={css.price}>{rentalCompany}</p>
-        <p className={css.price}>Premium</p>
+        <p>{partsOfAddress[1]}</p>|<p>{partsOfAddress[2]}</p>|
+        <p className={css.price}>
+          {rentalCompany === 'Adventure Car Rentals' ||
+          rentalCompany === 'Economy Car Rentals' ||
+          rentalCompany === 'Supreme Car Rentals' ||
+          rentalCompany === 'Classic Car Rentals'
+            ? rentalCompany.replace('Rentals', '')
+            : rentalCompany}
+        </p>
+        |<p className={css.price}>Premium</p>
       </div>
 
       <div className={css.aboutPart}>
-        <p className={css.price}>{type}</p>
-        <p className={css.price}>{model}</p>
-        <p className={css.price}>{id}</p>
-        {Array.isArray(accessories) &&
-          accessories.slice(0, 1).map((item, index) => (
-            <p className={css.price} key={index}>
-              {item}
-            </p>
-          ))}
+        <p className={css.price}>{type}</p>|<p className={css.price}>{model}</p>
+        |<p className={css.price}>{id}</p>|
+        {Array.isArray(accessories) && (
+          <p className={css.price}>
+            {accessories.reduce(current => {
+              if (current.length > 25) {
+                return current.slice(0, current.lastIndexOf(' ', 25));
+              } else {
+                return current;
+              }
+            }, accessories[0])}
+          </p>
+        )}
       </div>
 
       {/* {isLoading && <LoaderSmall />}
