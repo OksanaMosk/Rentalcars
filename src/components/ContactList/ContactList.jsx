@@ -1,30 +1,25 @@
-// import { useParams } from 'react-router-dom';
-// import { selectFilterTerm } from 'redux/filter/filter.selector';
-// import { NavLink } from 'react-router-dom';
+import React from 'react';
 
 import { ContactElement } from '../ContactElement/ContactElement';
-import { useSelector } from 'react-redux';
-import React from 'react';
-import { selectContacts } from 'redux/contacts/contacts.selector';
 
 import css from './ContactList.module.css';
 
-export const ContactList = () => {
-  const listResults = useSelector(selectContacts);
+export const ContactList = ({ contacts, filterTerm }) => {
+  const filteredContacts = contacts.filter(contact =>
+    contact.make.toLowerCase().includes(filterTerm.toLowerCase())
+  );
 
   return (
-    <>
-      <div className={css.homeContainer}>
-        <ul className={css.homeList}>
-          {listResults &&
-            listResults.map(contact => (
-              <ContactElement key={contact.id} {...contact} />
-            ))}
-        </ul>
-      </div>
-    </>
+    <div className={css.homeContainer}>
+      <ul className={css.homeList}>
+        {filteredContacts.map(contact => (
+          <ContactElement key={contact.id} {...contact} />
+        ))}
+      </ul>
+    </div>
   );
 };
+
 // const id = useParams();
 
 // const filterTerm = useSelector(selectFilterTerm);

@@ -1,28 +1,36 @@
-import React from 'react';
-import { setFilterTerm } from 'redux/filter/filter.reducer';
-import { selectFilterTerm } from 'redux/filter/filter.selector';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import makes from '../../json/makes.json';
 
 import css from './Filter.module.css';
 
-export default function Filter({ value }) {
-  const filterTerm = useSelector(selectFilterTerm);
-  const dispatch = useDispatch();
-  const changeFilter = event => {
-    dispatch(setFilterTerm(event.target.value));
+const Filter = ({ onFilterChange }) => {
+  const [selectedMake, setSelectedMake] = useState('');
+
+  const handleMakeChange = event => {
+    const selectedValue = event.target.value;
+    setSelectedMake(selectedValue);
+    onFilterChange(selectedValue);
   };
 
   return (
-    <form className={css.formlFind}>
-      <label className={css.labelFind}>
-        Find contacts by name
-        <input
-          className={css.inputFind}
-          type="text"
-          value={filterTerm}
-          onChange={changeFilter}
-        />
-      </label>
-    </form>
+    <div className={css.filterform}>
+      <h2 className={css.brandTitle}>Car brand</h2>
+      <select
+        className={css.filterByBrand}
+        value={selectedMake}
+        onChange={handleMakeChange}
+      >
+        <option className={css.option} value="">
+          All brands
+        </option>
+        {makes.map((make, index) => (
+          <option className={css.brands} key={index} value={make}>
+            {make.charAt(0).toUpperCase() + make.slice(1).toLowerCase()}
+          </option>
+        ))}
+      </select>
+    </div>
   );
-}
+};
+
+export default Filter;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { fetchContacts } from 'redux/contacts/contacts.reducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { ContactList } from 'components/ContactList/ContactList';
@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom';
 import { Navigate, NavLink } from 'react-router-dom';
 import Filter from 'components/Filter/Filter';
 import Loader from 'components/Loader/Loader';
-import { useRef } from 'react';
 import axios from 'axios';
 
 import css from './CatalogPage.module.css';
@@ -15,7 +14,6 @@ const CatalogPage = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.contactsStore.isLoading);
   const error = useSelector(state => state.contactsStore.error);
-  const contacts = useSelector(state => state.contactsStore.contacts);
   const location = useLocation();
   const backLinkRef = useRef(location.state?.from ?? '/');
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,6 +21,8 @@ const CatalogPage = () => {
   const limit = 12;
   const [loading, setLoading] = useState(true);
   const contactsContainerRef = useRef(null);
+  const [filterTerm, setFilterTerm] = useState('');
+  const [filteredContacts, setFilteredContacts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,16 +30,29 @@ const CatalogPage = () => {
         const totalItemsResponse = await axios.get(
           'https://65e85b1c4bb72f0a9c4f090a.mockapi.io/cars'
         );
-        const totalItemsCount = totalItemsResponse.data.length;
+        // const totalItemsCount = totalItemsResponse.data.length;
+        console.log('Total items data:', totalItemsResponse);
 
-        const totalPages = Math.ceil(totalItemsCount / limit);
-        dispatch(fetchContacts({ page: currentPage, limit }));
+        const filtered = totalItemsResponse.data.filter(contact =>
+          contact.make.toLowerCase().includes(filterTerm.toLowerCase())
+        );
+        console.log('Filtered contacts:', filtered);
 
-        if (currentPage >= totalPages) {
-          setHasMore(false);
+        setFilteredContacts(filtered);
+
+        const totalPages = Math.ceil(filtered.length / limit);
+
+        if (currentPage > totalPages) {
+          setCurrentPage(totalPages);
         }
 
+        dispatch(fetchContacts({ page: currentPage, limit }));
+
+        setHasMore(currentPage < totalPages);
+
         setLoading(false);
+
+        console.log('Filter term:', filterTerm);
       } catch (error) {
         console.error('Error fetching contacts:', error);
         setLoading(false);
@@ -47,7 +60,7 @@ const CatalogPage = () => {
     };
 
     fetchData();
-  }, [dispatch, currentPage, limit]);
+  }, [dispatch, currentPage, limit, filterTerm]);
 
   const handleLoadMore = () => {
     if (hasMore) {
@@ -58,6 +71,15 @@ const CatalogPage = () => {
       });
     }
   };
+
+  const handleFilterChange = value => {
+    console.log('Filter value:', value);
+    setFilterTerm(value);
+    setCurrentPage(1);
+  };
+
+  console.log('Filter term:', filterTerm);
+  console.log('Filtered contacts:', filteredContacts);
 
   if (loading) {
     return (
@@ -77,9 +99,18 @@ const CatalogPage = () => {
       >
         Go back
       </NavLink>
-      <Filter />
+
+      <Filter onFilterChange={handleFilterChange} />
+
       {isLoading && <Loader />}
-      <ContactList contacts={contacts} />
+      <ContactList
+        contacts={filteredContacts.slice(
+          (currentPage - 1) * limit,
+          currentPage * limit
+        )}
+        filterTerm={filterTerm}
+      />
+
       {hasMore && (
         <button className={css.button} onClick={handleLoadMore}>
           Load more

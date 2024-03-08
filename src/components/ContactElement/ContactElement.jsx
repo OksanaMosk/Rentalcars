@@ -5,7 +5,7 @@
 
 // import { selectContacts } from 'redux/contacts/contacts.selector';
 // import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import css from './ContactElement.module.css';
 
@@ -20,6 +20,7 @@ export const ContactElement = ({
   rentalPrice,
   rentalCompany,
   address,
+  filterTerm, // Додайте проп для фільтрації
 }) => {
   const partsOfAddress = address.split(', ');
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -27,6 +28,13 @@ export const ContactElement = ({
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
+
+  if (
+    filterTerm &&
+    !make.toLowerCase().includes(filterTerm.toString().toLowerCase())
+  ) {
+    return null;
+  }
 
   return (
     <li
@@ -84,3 +92,4 @@ export const ContactElement = ({
     </li>
   );
 };
+//  return <p className={css.noFound}>No found cars of this brand </p>;

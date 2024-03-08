@@ -4,6 +4,7 @@
   --about-text-color: rgba(18, 20, 23, 0.5);
   --secondary-text-color: #3470ff;
   --button-active: #0b44cd;
+  --text-color: #fff;
 }
 
 .itemHome {
@@ -76,8 +77,28 @@ img {
   border-radius: 12px;
   width: 274px;
   height: 44px;
-  background: #3470ff;
+  background-color: var(--secondary-text-color);
   cursor: pointer;
   text-decoration: none;
   margin-top: 28px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.button:focus,
+.button:hover {
+  background-color: var(--button-active);
+}
+
+.noFound {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 100px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--about-text-color);
 }
