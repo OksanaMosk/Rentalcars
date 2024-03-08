@@ -67,3 +67,11 @@
   line-height: 125%;
   color: #121417;
 }
+.filterList {
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  list-style: none;
+}
+.filterLink {
+}

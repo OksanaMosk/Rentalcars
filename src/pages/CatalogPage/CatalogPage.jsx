@@ -23,6 +23,7 @@ const CatalogPage = () => {
   const contactsContainerRef = useRef(null);
   const [filterTerm, setFilterTerm] = useState('');
   const [filteredContacts, setFilteredContacts] = useState([]);
+  const [selectedPrice, setSelectedPrice] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,13 +31,10 @@ const CatalogPage = () => {
         const totalItemsResponse = await axios.get(
           'https://65e85b1c4bb72f0a9c4f090a.mockapi.io/cars'
         );
-        // const totalItemsCount = totalItemsResponse.data.length;
-        console.log('Total items data:', totalItemsResponse);
 
         const filtered = totalItemsResponse.data.filter(contact =>
           contact.make.toLowerCase().includes(filterTerm.toLowerCase())
         );
-        console.log('Filtered contacts:', filtered);
 
         setFilteredContacts(filtered);
 
@@ -51,8 +49,6 @@ const CatalogPage = () => {
         setHasMore(currentPage < totalPages);
 
         setLoading(false);
-
-        console.log('Filter term:', filterTerm);
       } catch (error) {
         console.error('Error fetching contacts:', error);
         setLoading(false);
@@ -73,13 +69,18 @@ const CatalogPage = () => {
   };
 
   const handleFilterChange = value => {
-    console.log('Filter value:', value);
     setFilterTerm(value);
     setCurrentPage(1);
   };
 
-  console.log('Filter term:', filterTerm);
-  console.log('Filtered contacts:', filteredContacts);
+  const handlePriceChange = value => {
+    // Фільтруємо контакти на основі вибраної ціни
+    const filteredByPrice = filteredContacts.filter(
+      contact => contact.rentalPrice <= value
+    );
+    // Оновлюємо стан відфільтрованих контактів
+    setFilteredContacts(filteredByPrice);
+  };
 
   if (loading) {
     return (
@@ -100,7 +101,12 @@ const CatalogPage = () => {
         Go back
       </NavLink>
 
-      <Filter onFilterChange={handleFilterChange} />
+      <Filter
+        onFilterChange={handleFilterChange}
+        onPriceChange={handlePriceChange} // Додайте це
+        filteredContacts={filteredContacts}
+        setFilteredContacts={setFilteredContacts}
+      />
 
       {isLoading && <Loader />}
       <ContactList
@@ -108,7 +114,8 @@ const CatalogPage = () => {
           (currentPage - 1) * limit,
           currentPage * limit
         )}
-        filterTerm={filterTerm}
+        makeFilterTerm={filterTerm} // Передача значення makeFilterTerm
+        priceFilterTerm={selectedPrice}
       />
 
       {hasMore && (

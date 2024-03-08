@@ -4,10 +4,18 @@ import { ContactElement } from '../ContactElement/ContactElement';
 
 import css from './ContactList.module.css';
 
-export const ContactList = ({ contacts, filterTerm }) => {
+export const ContactList = ({ contacts, makeFilterTerm, priceFilterTerm }) => {
+  // Фільтрація контактів за ціною
   const filteredContacts = contacts.filter(contact =>
-    contact.make.toLowerCase().includes(filterTerm.toLowerCase())
+    makeFilterTerm && priceFilterTerm
+      ? contact.rentalPrice === priceFilterTerm &&
+        contact.make === makeFilterTerm
+      : true
   );
+
+  console.log('Make filter term:', makeFilterTerm);
+  console.log('Price filter term:', priceFilterTerm);
+  console.log('Filtered contacts:', filteredContacts);
 
   return (
     <div className={css.homeContainer}>
