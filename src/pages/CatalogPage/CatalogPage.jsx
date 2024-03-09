@@ -1,64 +1,53 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { fetchContacts } from 'redux/contacts/contacts.reducer';
+import { fetchCars } from 'redux/cars/cars.reducer';
 import { useSelector, useDispatch } from 'react-redux';
-import { ContactList } from 'components/ContactList/ContactList';
+import { CarList } from 'components/CarList/CarList';
 import { useLocation } from 'react-router-dom';
 import { Navigate, NavLink } from 'react-router-dom';
 import Filter from 'components/Filter/Filter';
 import Loader from 'components/Loader/Loader';
-import axios from 'axios';
+import { selectCars } from 'redux/cars/cars.selector';
 
 import css from './CatalogPage.module.css';
 
 const CatalogPage = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(state => state.contactsStore.isLoading);
-  const error = useSelector(state => state.contactsStore.error);
+  const error = useSelector(state => state.carsStore.error);
   const location = useLocation();
   const backLinkRef = useRef(location.state?.from ?? '/');
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const limit = 12;
   const [loading, setLoading] = useState(true);
-  const contactsContainerRef = useRef(null);
-  const [filterTerm, setFilterTerm] = useState('');
-  const [filteredContacts, setFilteredContacts] = useState([]);
-  const [selectedPrice, setSelectedPrice] = useState('');
-  const [contacts, setContacts] = useState([]);
-  const [allContacts, setAllContacts] = useState([]);
+  const [filteredCars, setFilteredCars] = useState([]);
+  const data = useSelector(selectCars);
+  console.log(data);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const totalItemsResponse = await axios.get(
-          'https://65e85b1c4bb72f0a9c4f090a.mockapi.io/cars'
+        setLoading(true);
+        const totalItemsResponse = await dispatch(
+          fetchCars({ page: currentPage, limit })
         );
-
-        const filtered = totalItemsResponse.data.filter(contact =>
-          contact.make.toLowerCase().includes(filterTerm.toLowerCase())
-        );
-
-        setFilteredContacts(filtered);
-
-        const totalPages = Math.ceil(filtered.length / limit);
-
+        const allCars = totalItemsResponse.payload.allCars;
+        console.log('allCars is array:', Array.isArray(allCars));
+        setLoading(false);
+        setFilteredCars(allCars);
+        const totalPages = Math.ceil(allCars.length / limit);
         if (currentPage > totalPages) {
           setCurrentPage(totalPages);
         }
-
-        dispatch(fetchContacts({ page: currentPage, limit }));
-
         setHasMore(currentPage < totalPages);
-
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching contacts:', error);
+        console.error('Помилка отримання автомобілів:', error);
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [dispatch, currentPage, limit, filterTerm]);
+  }, [dispatch, currentPage, limit]);
 
   const handleLoadMore = () => {
     if (hasMore) {
@@ -70,18 +59,53 @@ const CatalogPage = () => {
     }
   };
 
-  const handleFilterChange = value => {
-    setFilterTerm(value);
-    setCurrentPage(1);
-  };
+  const handleAllFilterChange = filters => {
+    let filtered = data.allCars;
+    if (Array.isArray(data.allCars)) {
+      console.log('allCars is an array');
+    } else {
+      console.log('allCars is not an array');
+    }
 
-  const handlePriceChange = value => {
-    // Фільтруємо контакти на основі вибраної ціни
-    const filteredByPrice = filteredContacts.filter(
-      contact => contact.rentalPrice <= value
-    );
-    // Оновлюємо стан відфільтрованих контактів
-    setFilteredContacts(filteredByPrice);
+    console.log('data.allCars:', data.allCars);
+    console.log('handleAllFilterChange is array:', Array.isArray(data.allCars));
+
+    if (filters.make) {
+      filtered = filtered.filter(
+        car => car.make.toLowerCase() === filters.make.toLowerCase()
+      );
+    }
+    console.log('Filtered:', filtered);
+
+    if (filters.price) {
+      const numericPrice = parseFloat(filters.price);
+      filtered = filtered.filter(
+        car => parseFloat(car.rentalPrice.replace('$', '')) <= numericPrice
+      );
+    }
+
+    console.log('Filtered:', filtered);
+
+    if (filters.minMileage) {
+      const minMileageNumber = parseFloat(filters.minMileage);
+      filtered = filtered.filter(
+        car => parseFloat(car.mileage) >= minMileageNumber
+      );
+    }
+
+    console.log('Filtered:', filtered);
+
+    if (filters.maxMileage) {
+      const maxMileageNumber = parseFloat(filters.maxMileage);
+      filtered = filtered.filter(
+        car => parseFloat(car.mileage) <= maxMileageNumber
+      );
+    }
+
+    console.log('Filtered:', filtered);
+
+    setFilteredCars(filtered);
+    setCurrentPage(1);
   };
 
   if (loading) {
@@ -93,7 +117,7 @@ const CatalogPage = () => {
   }
 
   return (
-    <div className={css.contactsContainer} ref={contactsContainerRef}>
+    <div className={css.contactsContainer}>
       {error !== null && <Navigate to="/catalog/404" replace={true} />}
       <NavLink
         state={{ from: location }}
@@ -104,25 +128,18 @@ const CatalogPage = () => {
       </NavLink>
 
       <Filter
-        contacts={contacts}
-        allContacts={allContacts}
-        filteredContacts={filteredContacts}
-        setFilteredContacts={setFilteredContacts}
-        onFilterChange={handleFilterChange}
-        onPriceChange={handlePriceChange}
+        onAllFilterChange={handleAllFilterChange}
+        allCars={data.allCars}
       />
 
-      {isLoading && <Loader />}
-      <ContactList
-        contacts={filteredContacts.slice(
+      <CarList
+        cars={filteredCars.slice(
           (currentPage - 1) * limit,
           currentPage * limit
         )}
-        makeFilterTerm={filterTerm}
-        priceFilterTerm={selectedPrice}
       />
 
-      {hasMore && filteredContacts.length > currentPage * limit && (
+      {hasMore && filteredCars.length > currentPage * limit && (
         <button className={css.button} onClick={handleLoadMore}>
           Load more
         </button>

@@ -7,9 +7,9 @@
 // import { useEffect } from 'react';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import css from './ContactElement.module.css';
+import css from './CarElement.module.css';
 
-export const ContactElement = ({
+export const CarElement = ({
   id,
   year,
   make,

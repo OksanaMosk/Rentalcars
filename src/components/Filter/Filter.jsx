@@ -3,71 +3,40 @@ import makes from '../../json/makes.json';
 
 import css from './Filter.module.css';
 
-const Filter = ({
-  onFilterChange,
-  onPriceChange,
-  filteredContacts,
-  setFilteredContacts,
-}) => {
+const Filter = ({ onAllFilterChange, allCars }) => {
   const [selectedMake, setSelectedMake] = useState('');
   const [selectedPrice, setSelectedPrice] = useState('');
-
   const [minMileage, setMinMileage] = useState('');
   const [maxMileage, setMaxMileage] = useState('');
 
   const handleMakeChange = event => {
-    const selectedValue = event.target.value;
-    setSelectedMake(selectedValue);
-
-    // Відфільтрувати список контактів за обраним брендом
-    const filteredByBrand = filteredContacts.filter(
-      contact => contact.make.toLowerCase() === selectedValue.toLowerCase()
-    );
-
-    console.log('Filtered contacts after brand selection:', filteredByBrand);
-
-    // Оновити стан відфільтрованих контактів
-    setFilteredContacts(filteredByBrand);
-
-    // Передати обраний бренд у батьківський компонент
-    onFilterChange(selectedValue);
+    setSelectedMake(event.target.value);
   };
 
   const handlePriceChange = event => {
-    const selectedValue = event.target.value;
-    const numericPrice = parseFloat(selectedValue.replace('$', ''));
-
-    if (!isNaN(numericPrice)) {
-      setSelectedPrice(selectedValue); // Встановлюємо вибрану ціну
-
-      console.log('Filtered contacts before filtering:', filteredContacts);
-
-      const filteredByPrice = filteredContacts.filter(
-        contact =>
-          parseFloat(contact.rentalPrice.replace('$', '')) <= numericPrice
-      );
-      console.log('Filtered by price:', filteredByPrice);
-      setFilteredContacts(filteredByPrice);
-      onFilterChange(selectedMake, selectedValue); // Передаємо всі параметри у функцію onFilterChange
-    }
+    setSelectedPrice(event.target.value);
   };
 
   const handleMinMileageChange = event => {
-    const minMileageValue = event.target.value;
-    if (!isNaN(minMileageValue)) {
-      setFilteredContacts(minMileageValue);
-    }
-    setSelectedPrice(minMileageValue);
-    onFilterChange(selectedMake, selectedPrice, minMileageValue, maxMileage);
+    setMinMileage(event.target.value);
   };
 
   const handleMaxMileageChange = event => {
-    const maxMileageValue = event.target.value;
-    if (!isNaN(maxMileageValue)) {
-      setMaxMileage(maxMileageValue);
-    }
-    setSelectedPrice(maxMileageValue);
-    onFilterChange(selectedMake, selectedPrice, minMileage, maxMileageValue);
+    setMaxMileage(event.target.value);
+  };
+
+  const handleFilterClick = () => {
+    const newFilters = {
+      make: selectedMake,
+      price: selectedPrice,
+      minMileage: parseInt(minMileage),
+      maxMileage: parseInt(maxMileage),
+    };
+
+    console.log('Selected make:', selectedMake);
+    console.log('Selected  price:', selectedPrice);
+    console.log('Selected make:', minMileage, maxMileage);
+    onAllFilterChange(newFilters);
   };
 
   return (
@@ -80,11 +49,9 @@ const Filter = ({
             value={selectedMake}
             onChange={handleMakeChange}
           >
-            <option className={css.option} value="">
-              All brands
-            </option>
+            <option value="">All brands</option>
             {makes.map((make, index) => (
-              <option className={css.brands} key={index} value={make}>
+              <option key={index} value={make}>
                 {make.charAt(0).toUpperCase() + make.slice(1).toLowerCase()}
               </option>
             ))}
@@ -99,22 +66,14 @@ const Filter = ({
             onChange={handlePriceChange}
           >
             <option value="">To $</option>
-            <option value="30">$30</option>
-            <option value="40">$40</option>
-            <option value="50">$50</option>
-            <option value="60">$60</option>
-            <option value="70">$70</option>
-            <option value="80">$80</option>
-            <option value="90">$90</option>
-            <option value="100">$100</option>
-            <option value="150">$150</option>
-            <option value="200">$200</option>
-            <option value="250">$250</option>
-            <option value="300">$300</option>
-            <option value="350">$350</option>
-            <option value="400">$400</option>
-            <option value="450">$450</option>
-            <option value="500">$500</option>
+            {[
+              30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 350, 400,
+              450, 500,
+            ].map((price, index) => (
+              <option key={index} value={price}>
+                ${price}
+              </option>
+            ))}
           </select>
         </li>
 
@@ -134,6 +93,13 @@ const Filter = ({
           />
         </li>
       </ul>
+      <button
+        type="button"
+        onClick={handleFilterClick}
+        className={css.filterButton}
+      >
+        Search
+      </button>
     </div>
   );
 };
