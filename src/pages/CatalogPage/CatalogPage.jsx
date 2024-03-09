@@ -24,6 +24,8 @@ const CatalogPage = () => {
   const [filterTerm, setFilterTerm] = useState('');
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState('');
+  const [contacts, setContacts] = useState([]);
+  const [allContacts, setAllContacts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,10 +104,12 @@ const CatalogPage = () => {
       </NavLink>
 
       <Filter
-        onFilterChange={handleFilterChange}
-        onPriceChange={handlePriceChange} // Додайте це
+        contacts={contacts}
+        allContacts={allContacts}
         filteredContacts={filteredContacts}
         setFilteredContacts={setFilteredContacts}
+        onFilterChange={handleFilterChange}
+        onPriceChange={handlePriceChange}
       />
 
       {isLoading && <Loader />}
@@ -114,11 +118,11 @@ const CatalogPage = () => {
           (currentPage - 1) * limit,
           currentPage * limit
         )}
-        makeFilterTerm={filterTerm} // Передача значення makeFilterTerm
+        makeFilterTerm={filterTerm}
         priceFilterTerm={selectedPrice}
       />
 
-      {hasMore && (
+      {hasMore && filteredContacts.length > currentPage * limit && (
         <button className={css.button} onClick={handleLoadMore}>
           Load more
         </button>

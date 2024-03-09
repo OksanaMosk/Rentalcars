@@ -18,6 +18,18 @@ const Filter = ({
   const handleMakeChange = event => {
     const selectedValue = event.target.value;
     setSelectedMake(selectedValue);
+
+    // Відфільтрувати список контактів за обраним брендом
+    const filteredByBrand = filteredContacts.filter(
+      contact => contact.make.toLowerCase() === selectedValue.toLowerCase()
+    );
+
+    console.log('Filtered contacts after brand selection:', filteredByBrand);
+
+    // Оновити стан відфільтрованих контактів
+    setFilteredContacts(filteredByBrand);
+
+    // Передати обраний бренд у батьківський компонент
     onFilterChange(selectedValue);
   };
 
@@ -28,11 +40,13 @@ const Filter = ({
     if (!isNaN(numericPrice)) {
       setSelectedPrice(selectedValue); // Встановлюємо вибрану ціну
 
+      console.log('Filtered contacts before filtering:', filteredContacts);
+
       const filteredByPrice = filteredContacts.filter(
         contact =>
           parseFloat(contact.rentalPrice.replace('$', '')) <= numericPrice
       );
-
+      console.log('Filtered by price:', filteredByPrice);
       setFilteredContacts(filteredByPrice);
       onFilterChange(selectedMake, selectedValue); // Передаємо всі параметри у функцію onFilterChange
     }
