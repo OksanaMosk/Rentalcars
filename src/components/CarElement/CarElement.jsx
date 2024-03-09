@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { NavLink, useLocation } from 'react-router-dom';
+import { selectFavorites } from 'redux/favorites/favorites.selector';
+
 import {
   addFavorite,
   removeFavorite,
@@ -32,20 +34,29 @@ export const CarElement = ({
     setImageLoaded(true);
   };
 
-  if (
-    filterTerm &&
-    !make.toLowerCase().includes(filterTerm.toString().toLowerCase())
-  ) {
-    return null;
-  }
+  const handleAddToFavorites = () => {
+    const carData = {
+      id,
+      year,
+      make,
+      model,
+      type,
+      img,
+      accessories,
+      rentalPrice,
+      rentalCompany,
+      address,
+    };
 
-  const handleAddToFavorites = filterTerm => {
     if (!isFavorite) {
-      dispatch(addFavorite(filterTerm));
+      console.log('Adding to favorites:', carData);
+      dispatch(addFavorite(carData));
+      setIsFavorite(true);
     } else {
-      dispatch(removeFavorite(filterTerm));
+      console.log('Removing from favorites, id:', id);
+      dispatch(removeFavorite(id));
+      setIsFavorite(false);
     }
-    setIsFavorite(!isFavorite);
   };
 
   return (
@@ -112,4 +123,3 @@ export const CarElement = ({
     </li>
   );
 };
-//  return <p className={css.noFound}>No found cars of this brand </p>;

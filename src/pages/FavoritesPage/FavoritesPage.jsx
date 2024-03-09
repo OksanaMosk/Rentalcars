@@ -10,7 +10,6 @@ import css from './FavoritesPage.module.css';
 
 const FavoritesPage = () => {
   const favoriteCars = useSelector(selectFavorites);
-
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,14 +21,18 @@ const FavoritesPage = () => {
 
   const loadMore = () => {
     const startIndex = page * 12;
-    const nextCars = favoriteCars.favorites.slice(startIndex, startIndex + 12);
-    setCars([...cars, ...nextCars]);
+    const nextCars =
+      favoriteCars && favoriteCars.favorites.slice(startIndex, startIndex + 12);
+    setCars(prevCars => [...prevCars, ...nextCars]);
     setPage(page + 1);
   };
 
   useEffect(() => {
-    const initialCars = favoriteCars.favorites.slice(0, 12);
-    setCars(initialCars);
+    if (favoriteCars && favoriteCars.favorites) {
+      setLoading(false); // Встановлюємо стан завантаження в false, оскільки дані завантажені
+      const initialCars = favoriteCars.favorites.slice(0, 12);
+      setCars(initialCars);
+    }
   }, [favoriteCars]);
 
   return (
@@ -44,16 +47,18 @@ const FavoritesPage = () => {
         ) : (
           <>
             {cars.length ? (
-              cars.map(id => <CarElement key={id} />)
+              cars.map(car => <CarElement key={car.id} {...car} />)
             ) : (
               <p>Your favorites are currently empty...</p>
             )}
 
-            {favoriteCars.favorites.length > cars.length && (
-              <button variant="text" onClick={loadMore}>
-                Load more
-              </button>
-            )}
+            {favoriteCars &&
+              favoriteCars.favorites &&
+              favoriteCars.favorites.length > cars.length && (
+                <button variant="text" onClick={loadMore}>
+                  Load more
+                </button>
+              )}
           </>
         )}
       </div>
