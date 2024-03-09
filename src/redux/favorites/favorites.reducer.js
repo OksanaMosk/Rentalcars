@@ -9,9 +9,11 @@ export const favoritesSlice = createSlice({
   initialState,
   reducers: {
     addFavorite: (state, action) => {
+      console.log('Adding favorite:', action.payload);
       state.favorites.push(action.payload);
     },
     removeFavorite: (state, action) => {
+      console.log('Removing favorite:', action.payload);
       const updatedFavorites = state.favorites.filter(
         item => item.id !== action.payload.id
       );

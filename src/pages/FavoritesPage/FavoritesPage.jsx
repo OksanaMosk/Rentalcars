@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { selectFavorites } from 'redux/favorites/favorites.selector';
 
@@ -10,30 +10,24 @@ import css from './FavoritesPage.module.css';
 
 const FavoritesPage = () => {
   const favoriteCars = useSelector(selectFavorites);
-  const dispatch = useDispatch();
+  console.log('Favorite cars:', favoriteCars);
+
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const limit = 12;
-  const [page, setPage] = useState(1);
+
   const location = useLocation();
   const backLinkRef = location.state?.from ?? '/';
-  const [cars, setCars] = useState([]);
-
-  const loadMore = () => {
-    const startIndex = page * 12;
-    const nextCars =
-      favoriteCars && favoriteCars.favorites.slice(startIndex, startIndex + 12);
-    setCars(prevCars => [...prevCars, ...nextCars]);
-    setPage(page + 1);
-  };
 
   useEffect(() => {
+    console.log('Inside useEffect');
     if (favoriteCars && favoriteCars.favorites) {
-      setLoading(false); // Встановлюємо стан завантаження в false, оскільки дані завантажені
-      const initialCars = favoriteCars.favorites.slice(0, 12);
-      setCars(initialCars);
+      console.log('Favorites loaded:', favoriteCars.favorites);
+      setLoading(false);
+    } else if (favoriteCars === undefined) {
+      console.log('Favorites not loaded yet');
     }
   }, [favoriteCars]);
+
+  console.log('Loading:', loading);
 
   return (
     <>
@@ -46,19 +40,15 @@ const FavoritesPage = () => {
           <Loader />
         ) : (
           <>
-            {cars.length ? (
-              cars.map(car => <CarElement key={car.id} {...car} />)
+            {favoriteCars &&
+            favoriteCars.favorites &&
+            favoriteCars.favorites.length > 0 ? (
+              favoriteCars.favorites.map(car => (
+                <CarElement key={car.id} {...car} />
+              ))
             ) : (
               <p>Your favorites are currently empty...</p>
             )}
-
-            {favoriteCars &&
-              favoriteCars.favorites &&
-              favoriteCars.favorites.length > cars.length && (
-                <button variant="text" onClick={loadMore}>
-                  Load more
-                </button>
-              )}
           </>
         )}
       </div>

@@ -35,6 +35,7 @@ export const CarElement = ({
   };
 
   const handleAddToFavorites = () => {
+    console.log('isFavorite:', isFavorite);
     const carData = {
       id,
       year,
