@@ -6,13 +6,13 @@ import { useLocation } from 'react-router-dom';
 import { Navigate, NavLink } from 'react-router-dom';
 import Filter from 'components/Filter/Filter';
 import Loader from 'components/Loader/Loader';
-import { selectCars } from 'redux/cars/cars.selector';
+import { selectCars, selectError } from 'redux/cars/cars.selector';
 
 import css from './CatalogPage.module.css';
 
 const CatalogPage = () => {
   const dispatch = useDispatch();
-  const error = useSelector(state => state.carsStore.error);
+  const error = useSelector(selectError);
   const location = useLocation();
   const backLinkRef = useRef(location.state?.from ?? '/');
   const [currentPage, setCurrentPage] = useState(1);

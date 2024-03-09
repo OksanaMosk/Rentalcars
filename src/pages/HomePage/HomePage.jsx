@@ -1,11 +1,11 @@
-import photo from '../../images/111.mp4';
+import video from '../../images/111.mp4';
 import css from './HomePage.module.css';
 
 const HomePage = () => {
   return (
     <div className={css.homeContainer}>
       <video className={css.videoBackground} autoPlay loop muted>
-        <source src={photo} type="video/mp4" />
+        <source src={video} type="video/mp4" />
       </video>
       <div className={css.about}>
         <p className={css.homeAbout}>

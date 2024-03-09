@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { useRef } from 'react';
 
 import error1 from 'images/icons8-no-yelling-100.png';
-import error2 from 'images/icons8-user-groups-100.png';
 
 import css from './Page404.module.css';
 
@@ -29,7 +28,6 @@ const Page404Fetch = () => {
         <div className={css.errorSection}>
           <h3 className={css.errorTitle}>The good news</h3>
           <p className={css.error}> They will definitely come back!</p>
-          <img src={error2} alt="{error2}" width={200} height={200}></img>
         </div>
       </div>
     </div>

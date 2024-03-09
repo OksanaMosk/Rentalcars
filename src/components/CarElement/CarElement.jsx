@@ -1,12 +1,13 @@
-// import LoaderSmall from 'components/Loader/LoaderSmall';
-
-// import { useDispatch, useSelector } from 'react-redux';
-// import { fetchContacts } from 'redux/contacts/contacts.reducer';
-
-// import { selectContacts } from 'redux/contacts/contacts.selector';
-// import { useEffect } from 'react';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import {
+  addFavorite,
+  removeFavorite,
+} from '../../redux/favorites/favorites.reducer';
+import noFavor from '../../images/noFavor.png';
+import favor from '../../images/favor.png';
+
 import css from './CarElement.module.css';
 
 export const CarElement = ({
@@ -20,10 +21,12 @@ export const CarElement = ({
   rentalPrice,
   rentalCompany,
   address,
-  filterTerm, // Додайте проп для фільтрації
+  filterTerm,
 }) => {
   const partsOfAddress = address.split(', ');
+  const dispatch = useDispatch();
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
@@ -36,27 +39,46 @@ export const CarElement = ({
     return null;
   }
 
+  const handleAddToFavorites = filterTerm => {
+    if (!isFavorite) {
+      dispatch(addFavorite(filterTerm));
+    } else {
+      dispatch(removeFavorite(filterTerm));
+    }
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <li
       className={`${css.itemHome} ${imageLoaded ? css.imageLoaded : ''}`}
       key={id}
     >
+      <button onClick={handleAddToFavorites} type="button">
+        <img
+          className={isFavorite ? css.favorIcon : css.noFavorIcon}
+          src={isFavorite ? favor : noFavor}
+          alt="favorite"
+          width={18}
+          height={16}
+        />
+        {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+      </button>
+
       <div style={{ width: '274px', height: '268px', overflow: 'hidden' }}>
         <img
+          className={css.img}
           src={img}
           alt={`Car ${id}`}
           onLoad={handleImageLoad}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
       </div>
-
       <div className={css.titlePart}>
         <h3 className={css.title}>
           {make} {model && <span className={css.title}>{model},</span>} {year}
         </h3>
         <p className={css.title}>{rentalPrice}</p>
       </div>
-
       <div className={css.aboutPart}>
         <p>{partsOfAddress[1]}</p>|<p>{partsOfAddress[2]}</p>|
         <p className={css.price}>
@@ -69,7 +91,6 @@ export const CarElement = ({
         </p>
         |<p className={css.price}>Premium</p>
       </div>
-
       <div className={css.aboutPart}>
         <p className={css.price}>{type}</p>|<p className={css.price}>{model}</p>
         |<p className={css.price}>{id}</p>|
@@ -85,7 +106,6 @@ export const CarElement = ({
           </p>
         )}
       </div>
-
       <NavLink className={css.button} key={id} to={`/buy/${id}`}>
         Learn more
       </NavLink>

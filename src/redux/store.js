@@ -12,10 +12,11 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { carsReducer } from './cars/cars.reducer';
-import { favoritesReducer } from './favorites/favorites.reducer';
+import favoritesReducer from './favorites/favorites.reducer';
 
 const carsConfig = {
-  key: 'cars',
+  key: 'favorites',
+
   storage,
   whitelist: ['cars'],
 };
