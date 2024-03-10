@@ -8,19 +8,11 @@ export const Footer = () => {
       <div className={css.aboutUsInfo}></div>
 
       <div className={css.footerNav}>
-        <NavLink
-          className={css.toLink}
-          // state={{ from: location }}
-          to="/catalog"
-        >
+        <NavLink className={css.toLink} to="/catalog">
           Catalog
         </NavLink>
 
-        <NavLink
-          className={css.toLink}
-          // state={{ from: location }}
-          to="/favorites"
-        >
+        <NavLink className={css.toLink} to="/favorites">
           Faforites cars
         </NavLink>
       </div>

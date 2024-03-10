@@ -6,18 +6,10 @@ export const Header = () => {
   return (
     <div className={css.header}>
       <div className={css.links}>
-        <NavLink
-          className={css.toLink}
-          // state={{ from: location }}
-          to="/catalog"
-        >
+        <NavLink className={css.toLink} to="/catalog">
           Catalog
         </NavLink>
-        <NavLink
-          className={css.toLink}
-          // state={{ from: location }}
-          to="/favorites"
-        >
+        <NavLink className={css.toLink} to="/favorites">
           Faforites cars
         </NavLink>
       </div>

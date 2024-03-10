@@ -59,9 +59,6 @@ export const DetailsAboutCar = ({
             {address.replace(/,([^,]{0,10})$/, ',\u00A0$1')}
           </p>
           <div className={css.aboutDetails}></div>
-          {/* 
-          {isLoading && <LoaderSmall />}
-          {error !== null && <>{error}</>} */}
         </div>
       </div>
     </li>

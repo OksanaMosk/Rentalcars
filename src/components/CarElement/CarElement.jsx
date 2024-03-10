@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, useLocation } from 'react-router-dom';
+
 import { selectFavorites } from 'redux/favorites/favorites.selector';
 import {
   addFavorite,
   removeFavorite,
 } from '../../redux/favorites/favorites.reducer';
+import ModalWindow from '../ModalWindow/ModalWindow';
+
 import noFavor from '../../images/noFavor.png';
 import favor from '../../images/favor.png';
 import css from './CarElement.module.css';
@@ -21,7 +23,17 @@ export const CarElement = ({
   rentalPrice,
   rentalCompany,
   address,
+  engineSize,
+  description,
+  rentalConditions,
+  fuelConsumption,
+  mileage,
+  functionalities,
+  data,
 }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const partsOfAddress = address.split(', ');
   const dispatch = useDispatch();
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -37,7 +49,6 @@ export const CarElement = ({
   }, [favorites, id]);
 
   useEffect(() => {
-    // Перевіряємо локальне сховище на наявність даного автомобіля у вибраному списку
     const storedFavoritesFromLocalStorage =
       JSON.parse(localStorage.getItem('favorites')) || [];
     const isAlreadyFavorite = storedFavoritesFromLocalStorage.some(
@@ -62,6 +73,12 @@ export const CarElement = ({
       rentalPrice,
       rentalCompany,
       address,
+      engineSize,
+      description,
+      rentalConditions,
+      fuelConsumption,
+      functionalities,
+      mileage,
     };
 
     if (isFavorite) {
@@ -97,7 +114,6 @@ export const CarElement = ({
         />
         {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
       </button>
-
       <div style={{ width: '274px', height: '268px', overflow: 'hidden' }}>
         <img
           className={css.img}
@@ -140,9 +156,54 @@ export const CarElement = ({
           </p>
         )}
       </div>
-      <NavLink className={css.button} key={id} to={`/buy/${id}`}>
+      <button
+        className={css.button}
+        key={id}
+        onClick={() =>
+          handleOpen(
+            id,
+            year,
+            make,
+            model,
+            type,
+            img,
+            accessories,
+            rentalPrice,
+            rentalCompany,
+            address,
+            engineSize,
+            description,
+            rentalConditions,
+            fuelConsumption,
+            mileage
+          )
+        }
+      >
         Learn more
-      </NavLink>
+      </button>
+      {open && (
+        <ModalWindow
+          open={open}
+          onClose={handleClose}
+          data={data}
+          id={id}
+          year={year}
+          make={make}
+          model={model}
+          type={type}
+          img={img}
+          accessories={accessories}
+          rentalPrice={rentalPrice}
+          rentalCompany={rentalCompany}
+          address={address}
+          engineSize={engineSize}
+          description={description}
+          rentalConditions={rentalConditions}
+          functionalities={functionalities}
+          fuelConsumption={fuelConsumption}
+          mileage={mileage}
+        />
+      )}
     </li>
   );
 };

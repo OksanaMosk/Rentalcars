@@ -1,0 +1,84 @@
+.modaContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 6px;
+  box-shadow: 24px;
+  z-index: 1200;
+
+  width: 541px;
+  height: 752px;
+  background: #fff;
+}
+
+.modaC {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
+.iconX {
+  width: 24px;
+  height: 24px;
+}
+
+.carImage {
+  width: 468px;
+  height: 248px;
+  margin: 40px auto;
+}
+
+.textWrap {
+  text-align: center;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.span {
+  font-weight: bold;
+}
+
+.list {
+  margin-bottom: 16px;
+}
+
+.item {
+  margin-bottom: 8px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: rgba(18, 20, 23, 0.5);
+}
+
+.description {
+  margin-bottom: 16px;
+}
+
+.info {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.conditionList {
+  margin-bottom: 16px;
+}
+
+.conditionItem {
+  margin-bottom: 8px;
+}
+
+.conditionSpan {
+  font-weight: bold;
+}
