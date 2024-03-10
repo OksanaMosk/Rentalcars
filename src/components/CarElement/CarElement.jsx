@@ -36,47 +36,50 @@ export const CarElement = ({
     }
   }, [favorites, id]);
 
+  useEffect(() => {
+    // Перевіряємо локальне сховище на наявність даного автомобіля у вибраному списку
+    const storedFavoritesFromLocalStorage =
+      JSON.parse(localStorage.getItem('favorites')) || [];
+    const isAlreadyFavorite = storedFavoritesFromLocalStorage.some(
+      car => car.id === id
+    );
+    setIsFavorite(isAlreadyFavorite);
+  }, [id]);
+
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
 
   const handleToggleFavorite = () => {
+    const carData = {
+      id,
+      year,
+      make,
+      model,
+      type,
+      img,
+      accessories,
+      rentalPrice,
+      rentalCompany,
+      address,
+    };
+
     if (isFavorite) {
       dispatch(removeFavorite(id));
       setIsFavorite(false);
-
-      const favoritesFromLocalStorage =
-        JSON.parse(localStorage.getItem('favorites')) || [];
-
-      const updatedFavorites = favoritesFromLocalStorage.filter(
-        car => car.id !== id
-      );
-
-      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
     } else {
-      const carData = {
-        id,
-        year,
-        make,
-        model,
-        type,
-        img,
-        accessories,
-        rentalPrice,
-        rentalCompany,
-        address,
-      };
-
       dispatch(addFavorite(carData));
       setIsFavorite(true);
-
-      const favoritesFromLocalStorage =
-        JSON.parse(localStorage.getItem('favorites')) || [];
-
-      const updatedFavorites = [...favoritesFromLocalStorage, carData];
-
-      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
     }
+
+    const favoritesFromLocalStorage =
+      JSON.parse(localStorage.getItem('favorites')) || [];
+
+    const updatedFavorites = isFavorite
+      ? favoritesFromLocalStorage.filter(car => car.id !== id)
+      : [...favoritesFromLocalStorage, carData];
+
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
   };
 
   return (
