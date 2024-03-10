@@ -15,16 +15,23 @@ import { carsReducer } from './cars/cars.reducer';
 import favoritesReducer from './favorites/favorites.reducer';
 
 const carsConfig = {
-  key: 'favorites',
+  key: 'cars',
 
   storage,
   whitelist: ['cars'],
 };
 
+const favoritesConfig = {
+  key: 'favorites',
+  version: 1,
+  storage,
+  whitelist: ['favorites'],
+};
+
 export const store = configureStore({
   reducer: {
     carsStore: persistReducer(carsConfig, carsReducer),
-    favoritesStore: favoritesReducer,
+    favoritesStore: (favoritesConfig, favoritesReducer),
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

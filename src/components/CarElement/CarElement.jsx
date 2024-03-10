@@ -23,7 +23,6 @@ export const CarElement = ({
   rentalPrice,
   rentalCompany,
   address,
-  filterTerm,
 }) => {
   const partsOfAddress = address.split(', ');
   const dispatch = useDispatch();
@@ -34,8 +33,7 @@ export const CarElement = ({
     setImageLoaded(true);
   };
 
-  const handleAddToFavorites = () => {
-    console.log('isFavorite:', isFavorite);
+  const handleToggleFavorite = () => {
     const carData = {
       id,
       year,
@@ -49,23 +47,32 @@ export const CarElement = ({
       address,
     };
 
-    if (!isFavorite) {
-      console.log('Adding to favorites:', carData);
-      dispatch(addFavorite(carData));
-      setIsFavorite(true);
-    } else {
-      console.log('Removing from favorites, id:', id);
+    if (isFavorite) {
       dispatch(removeFavorite(id));
       setIsFavorite(false);
+    } else {
+      dispatch(addFavorite(carData));
+      setIsFavorite(true);
     }
-  };
 
+    // Отримання даних про улюблені автомобілі з локального сховища
+    const favoritesFromLocalStorage =
+      JSON.parse(localStorage.getItem('favorites')) || [];
+
+    // Оновлення списку улюблених автомобілів у локальному сховищі
+    const updatedFavorites = isFavorite
+      ? favoritesFromLocalStorage.filter(car => car.id !== id) // Видалення автомобіля зі списку, якщо він був у списку улюблених
+      : [...favoritesFromLocalStorage, carData]; // Додавання автомобіля до списку, якщо він був не у списку улюблених
+
+    // Зберігання оновленого списку улюблених автомобілів у локальному сховищі
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+  };
   return (
     <li
       className={`${css.itemHome} ${imageLoaded ? css.imageLoaded : ''}`}
       key={id}
     >
-      <button onClick={handleAddToFavorites} type="button">
+      <button onClick={handleToggleFavorite} type="button">
         <img
           className={isFavorite ? css.favorIcon : css.noFavorIcon}
           src={isFavorite ? favor : noFavor}

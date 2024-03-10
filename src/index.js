@@ -8,19 +8,14 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistor } from 'redux/store';
 import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render( <
-    React.StrictMode >
-    <
-    BrowserRouter basename = "rentalcars" >
-    <
-    Provider store = { store } >
-    <
-    PersistGate persistor = { persistor } >
-    <
-    App / >
-    <
-    /PersistGate> <
-    /Provider> <
-    /BrowserRouter> <
-    /React.StrictMode>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <BrowserRouter basename="rentalcars">
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>
 );
