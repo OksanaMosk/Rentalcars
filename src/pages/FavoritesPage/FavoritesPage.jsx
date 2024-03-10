@@ -44,6 +44,15 @@ const FavoritesPage = () => {
     }
   };
 
+  // Фільтрація унікальних автомобілів за їх ідентифікаторами
+  const uniqueFavoriteCars = favoriteCars.reduce((acc, current) => {
+    const isCarExists = acc.some(car => car.id === current.id);
+    if (!isCarExists) {
+      return [...acc, current];
+    }
+    return acc;
+  }, []);
+
   return (
     <>
       <NavLink className={css.goBack} to={backLinkRef}>
@@ -71,8 +80,8 @@ const FavoritesPage = () => {
           <Loader />
         ) : (
           <>
-            {favoriteCars.length > 0 ? (
-              favoriteCars.map(car => (
+            {uniqueFavoriteCars.length > 0 ? (
+              uniqueFavoriteCars.map(car => (
                 <CarElement
                   key={car.id}
                   {...car}

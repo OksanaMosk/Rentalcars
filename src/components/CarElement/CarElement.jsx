@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { selectFavorites } from 'redux/favorites/favorites.selector';
-
 import {
   addFavorite,
   removeFavorite,
 } from '../../redux/favorites/favorites.reducer';
 import noFavor from '../../images/noFavor.png';
 import favor from '../../images/favor.png';
-
 import css from './CarElement.module.css';
 
 export const CarElement = ({
@@ -29,44 +27,58 @@ export const CarElement = ({
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
+  const favorites = useSelector(selectFavorites);
+
+  useEffect(() => {
+    if (favorites) {
+      const isAlreadyFavorite = favorites.some(car => car.id === id);
+      setIsFavorite(isAlreadyFavorite);
+    }
+  }, [favorites, id]);
+
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
 
   const handleToggleFavorite = () => {
-    const carData = {
-      id,
-      year,
-      make,
-      model,
-      type,
-      img,
-      accessories,
-      rentalPrice,
-      rentalCompany,
-      address,
-    };
-
     if (isFavorite) {
       dispatch(removeFavorite(id));
       setIsFavorite(false);
+
+      const favoritesFromLocalStorage =
+        JSON.parse(localStorage.getItem('favorites')) || [];
+
+      const updatedFavorites = favoritesFromLocalStorage.filter(
+        car => car.id !== id
+      );
+
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
     } else {
+      const carData = {
+        id,
+        year,
+        make,
+        model,
+        type,
+        img,
+        accessories,
+        rentalPrice,
+        rentalCompany,
+        address,
+      };
+
       dispatch(addFavorite(carData));
       setIsFavorite(true);
+
+      const favoritesFromLocalStorage =
+        JSON.parse(localStorage.getItem('favorites')) || [];
+
+      const updatedFavorites = [...favoritesFromLocalStorage, carData];
+
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
     }
-
-    // Отримання даних про улюблені автомобілі з локального сховища
-    const favoritesFromLocalStorage =
-      JSON.parse(localStorage.getItem('favorites')) || [];
-
-    // Оновлення списку улюблених автомобілів у локальному сховищі
-    const updatedFavorites = isFavorite
-      ? favoritesFromLocalStorage.filter(car => car.id !== id) // Видалення автомобіля зі списку, якщо він був у списку улюблених
-      : [...favoritesFromLocalStorage, carData]; // Додавання автомобіля до списку, якщо він був не у списку улюблених
-
-    // Зберігання оновленого списку улюблених автомобілів у локальному сховищі
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
   };
+
   return (
     <li
       className={`${css.itemHome} ${imageLoaded ? css.imageLoaded : ''}`}
