@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import Close from '../../images/noFavor.png';
+import Close from '../../images/delete.png';
 import css from './ModalWindow.module.css';
 import Backdrop from '../Backdrop/Backdrop';
 import { createPortal } from 'react-dom';
@@ -51,22 +51,22 @@ export default function ModalWindow({
   }, [onClose]);
 
   const partsOfAddress = address.split(', ');
-  const partOfRentalConditions = rentalConditions.split(', ');
 
   return createPortal(
     <>
       {open && <Backdrop onClick={onClose} />}
       <div
+        className={css.modaContent}
         ref={modalRef}
         open={open}
         onClose={onClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className={css.modaContent}>
+        <div>
           <div className={css.modaC}>
             <button className={css.closeIcon} onClick={onClose}>
-              <img src={Close} alt="Close button" className="iconX" />
+              <img src={Close} alt="Close button" width={24} height={24} />
             </button>
             <img
               src={img}
@@ -75,49 +75,66 @@ export default function ModalWindow({
               style={{ width: '468', height: '248', objectFit: 'cover' }}
             />
             <div className={css.modalTextWrap}>
-              <h2 className="car-title">
-                {make} <span className="model">{model},</span>
+              <h3 className={css.title}>
+                {make} {model && <span className={css.title}>{model},</span>}{' '}
                 {year}
-              </h2>
-              <ul className={css.carInfoList}>
-                <li>{partsOfAddress[1]}</li>|<li>{partsOfAddress[2]}</li>|
-                <li>Id: {id}</li>
-                <li>Year: {year}</li>
-                <li>Type: {type}</li>
+              </h3>
+              <ul className={css.aboutPart}>
+                <li className={css.price}>{partsOfAddress[1]}</li>|
+                <li>{partsOfAddress[2]}</li>|
+                <li className={css.price}>Id: {id}</li>|
+                <li className={css.price}>Year: {year}</li>|
+                <li className={css.price}>Type: {type}</li>
               </ul>
-              <ul className={css.carInfoList}>
-                <li>Fuel Consumption: {fuelConsumption}</li>
-                <li>Engine Size: {engineSize}</li>
+              <ul className={css.aboutPart}>
+                <li className={css.price}>
+                  Fuel Consumption: {fuelConsumption}
+                </li>
+                |<li className={css.price}>Engine Size: {engineSize}</li>
               </ul>
               <p className={css.description}>{description}</p>
               <p className={css.infoTitle}>Accessories and functionalities:</p>
-              <ul className={css.infoList}>
+              <ul className={css.aboutPart}>
                 {accessories.map((item, index) => (
-                  <li key={index}>{item}</li>
+                  <li className={css.price} key={index}>
+                    {item}|
+                  </li>
                 ))}
               </ul>
-              <ul className={css.infoList}>
+              <ul className={css.aboutPart}>
                 {functionalities.map((item, index) => (
-                  <li key={index}>{item}</li>
+                  <li className={css.price} key={index}>
+                    <span> {'| '}</span> {item}
+                  </li>
                 ))}
               </ul>
-              <p className={css.infoTitle}>Rental Conditions:</p>
-              <ul className={css.conditionTist}>
-                <li>Minimum age: {new Date().getFullYear() - year}</li>
-                <li>{partOfRentalConditions[1]}</li>
-                <li>{partOfRentalConditions[2]}</li>
-
-                <li>Mileage: {mileage.toLocaleString('en-US')}</li>
-                <li>Price: {rentalPrice}</li>
-              </ul>
+              <p className={css.infoRent}>Rental Conditions:</p>
+              <div className={css.conditionList}>
+                <ul className={css.conditionTist}>
+                  {rentalConditions.split('\n').map((part, partIndex) => (
+                    <li className={css.cond} key={partIndex}>
+                      {part}
+                    </li>
+                  ))}
+                </ul>
+                <ul className={css.conditionPart}>
+                  <li className={css.cond}>
+                    Mileage: {mileage.toLocaleString('en-US')}
+                  </li>
+                  <li className={css.cond}>Price: {rentalPrice}</li>
+                </ul>
+              </div>
             </div>
             <button
+              className={css.button}
               text="Rental car"
               width="168px"
               onClick={() => {
                 window.location.href = 'tel:+380730000000';
               }}
-            ></button>
+            >
+              Rental car
+            </button>
           </div>
         </div>
       </div>

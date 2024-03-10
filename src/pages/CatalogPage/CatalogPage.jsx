@@ -21,7 +21,6 @@ const CatalogPage = () => {
   const [loading, setLoading] = useState(true);
   const [filteredCars, setFilteredCars] = useState([]);
   const data = useSelector(selectCars);
-  console.log(data);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +30,7 @@ const CatalogPage = () => {
           fetchCars({ page: currentPage, limit })
         );
         const allCars = totalItemsResponse.payload.allCars;
-        console.log('allCars is array:', Array.isArray(allCars));
+
         setLoading(false);
         setFilteredCars(allCars);
         const totalPages = Math.ceil(allCars.length / limit);
@@ -41,7 +40,6 @@ const CatalogPage = () => {
         setHasMore(currentPage < totalPages);
         setLoading(false);
       } catch (error) {
-        console.error('Помилка отримання автомобілів:', error);
         setLoading(false);
       }
     };
@@ -61,21 +59,12 @@ const CatalogPage = () => {
 
   const handleAllFilterChange = filters => {
     let filtered = data.allCars;
-    if (Array.isArray(data.allCars)) {
-      console.log('allCars is an array');
-    } else {
-      console.log('allCars is not an array');
-    }
-
-    console.log('data.allCars:', data.allCars);
-    console.log('handleAllFilterChange is array:', Array.isArray(data.allCars));
 
     if (filters.make) {
       filtered = filtered.filter(
         car => car.make.toLowerCase() === filters.make.toLowerCase()
       );
     }
-    console.log('Filtered:', filtered);
 
     if (filters.price) {
       const numericPrice = parseFloat(filters.price);
@@ -84,8 +73,6 @@ const CatalogPage = () => {
       );
     }
 
-    console.log('Filtered:', filtered);
-
     if (filters.minMileage) {
       const minMileageNumber = parseFloat(filters.minMileage);
       filtered = filtered.filter(
@@ -93,16 +80,12 @@ const CatalogPage = () => {
       );
     }
 
-    console.log('Filtered:', filtered);
-
     if (filters.maxMileage) {
       const maxMileageNumber = parseFloat(filters.maxMileage);
       filtered = filtered.filter(
         car => parseFloat(car.mileage) <= maxMileageNumber
       );
     }
-
-    console.log('Filtered:', filtered);
 
     setFilteredCars(filtered);
     setCurrentPage(1);

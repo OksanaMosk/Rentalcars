@@ -2,8 +2,6 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import axios from 'axios';
 
-console.log('Before createAsyncThunk');
-
 export const fetchCars = createAsyncThunk(
   'cars/fetchAll',
   async ({ page = 1, limit = 12 }, thunkApi) => {
@@ -15,9 +13,6 @@ export const fetchCars = createAsyncThunk(
       const { data: limitedCars } = await axios.get(
         `https://65e85b1c4bb72f0a9c4f090a.mockapi.io/cars?limit=${limit}&page=${page}`
       );
-
-      console.log('All cars: ', allCars);
-      console.log('Limited cars: ', limitedCars);
 
       return { allCars, limitedCars };
     } catch (err) {

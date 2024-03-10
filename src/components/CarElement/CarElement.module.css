@@ -85,6 +85,7 @@ img {
   font-weight: 600;
   font-size: 14px;
   color: var(--text-color);
+  border: none;
 }
 
 .button:focus,
@@ -109,5 +110,12 @@ img {
   top: 32px;
   left: 244px;
 }
-.noFavor {
+
+.imgButton {
+  border: none;
+  background-color: transparent;
+  position: relative;
+
+  top: 32px;
+  left: 239px;
 }

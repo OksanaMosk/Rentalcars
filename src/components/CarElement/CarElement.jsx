@@ -104,7 +104,11 @@ export const CarElement = ({
       className={`${css.itemHome} ${imageLoaded ? css.imageLoaded : ''}`}
       key={id}
     >
-      <button onClick={handleToggleFavorite} type="button">
+      <button
+        className={css.imgButton}
+        onClick={handleToggleFavorite}
+        type="button"
+      >
         <img
           className={isFavorite ? css.favorIcon : css.noFavorIcon}
           src={isFavorite ? favor : noFavor}
@@ -112,7 +116,6 @@ export const CarElement = ({
           width={18}
           height={16}
         />
-        {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
       </button>
       <div style={{ width: '274px', height: '268px', overflow: 'hidden' }}>
         <img

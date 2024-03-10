@@ -1,6 +1,15 @@
+:root {
+  --font-family: 'Manrope', sans-serif;
+  --primary-text-color: #121417;
+  --about-text-color: rgba(18, 20, 23, 0.5);
+  --secondary-text-color: #3470ff;
+  --button-active: #0b44cd;
+  --text-color: #fff;
+}
+
 .modaContent {
   position: absolute;
-  top: 50%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 6px;
@@ -16,7 +25,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px;
 }
 
 .closeIcon {
@@ -32,53 +40,148 @@
 }
 
 .carImage {
-  width: 468px;
+  padding-top: 40px;
+  width: 461px;
   height: 248px;
-  margin: 40px auto;
+}
+
+.modalTextWrap {
+  padding: 14px 40px 0;
+}
+.aboutPart {
+  list-style: mone;
+  display: flex;
+  gap: 4px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--about-text-color);
+
+  list-style-type: none;
+  padding-inline-start: 0;
+  margin-block-end: 4px;
+  margin-block-start: 0;
+}
+
+.carTitle {
+  margin-bottom: 8px;
+}
+
+.title {
+  display: inline;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  height: 24px;
+}
+
+.title > span {
+  color: var(--secondary-text-color);
+}
+
+.description {
+  margin: 14px 0 24px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--primary-text-color);
+}
+.infoTitle {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--primary-text-color);
+  margin-bottom: 8px;
+}
+
+.infoRent {
+  margin: 24px auto 8px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--primary-text-color);
+}
+
+.conditionTist {
+  margin-bottom: 24px;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  margin-inline-end: 0;
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style-type: none;
+  gap: 8px;
+}
+.cond {
+  border-radius: 35px;
+  padding: 7px 14px;
+  width: 133px;
+  height: 32px;
+  background: #f9f9f9;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: #363535;
+
+  font-weight: 600;
+
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.conditionPart {
+  margin-bottom: 8px;
+  margin-bottom: 24px;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  margin-inline-end: 0;
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style-type: none;
+  gap: 8px;
+}
+.conditionList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.color {
+  color: #3470ff;
+}
+
+.button {
+  border-radius: 12px;
+  padding: 12px 50px;
+  width: 168px;
+  height: 44px;
+  background: #3470ff;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 143%;
+  color: #fff;
+  display: flex;
+  border: none;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 24px;
+  margin-left: 0;
 }
 
 .textWrap {
   text-align: center;
-}
-
-.title {
-  font-size: 24px;
-  margin-bottom: 16px;
-}
-
-.span {
-  font-weight: bold;
-}
-
-.list {
-  margin-bottom: 16px;
-}
-
-.item {
-  margin-bottom: 8px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 150%;
-  color: rgba(18, 20, 23, 0.5);
-}
-
-.description {
-  margin-bottom: 16px;
-}
-
-.info {
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.conditionList {
-  margin-bottom: 16px;
-}
-
-.conditionItem {
-  margin-bottom: 8px;
-}
-
-.conditionSpan {
-  font-weight: bold;
 }
