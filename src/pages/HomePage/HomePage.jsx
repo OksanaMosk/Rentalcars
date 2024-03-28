@@ -1,5 +1,6 @@
 import video from '../../images/111.mp4';
 import css from './HomePage.module.css';
+import BackdropHome from '../../components/BackdropHome/BackdropHome';
 
 const HomePage = () => {
   return (
@@ -7,6 +8,7 @@ const HomePage = () => {
       <video className={css.videoBackground} autoPlay loop muted>
         <source src={video} type="video/mp4" />
       </video>
+      <BackdropHome />
       <div className={css.about}>
         <p className={css.homeAbout}>
           In addition to the speed and practicality of renting on Rentcars, you

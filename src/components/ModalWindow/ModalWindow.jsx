@@ -56,7 +56,7 @@ export default function ModalWindow({
     <>
       {open && <Backdrop onClick={onClose} />}
       <div
-        className={css.modaContent}
+        className={css.modalContent}
         ref={modalRef}
         open={open}
         onClose={onClose}

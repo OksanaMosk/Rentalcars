@@ -4,7 +4,10 @@
   flex-direction: row;
   justify-content: space-between;
   gap: 30px;
+  margin: 0;
+  padding: 0;
 }
+
 .videoBackground {
   position: absolute;
   top: 60px;
@@ -16,23 +19,31 @@
 
 @keyframes slideLeft {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(0);
     opacity: 0;
+  }
+  50% {
+    transform: translateX(20%);
+    opacity: 1;
   }
   100% {
     transform: translateX(0);
-    opacity: 1;
+    opacity: 0;
   }
 }
 
 @keyframes slideRight {
   0% {
-    transform: translateX(100%);
+    transform: translateX(0);
     opacity: 0;
+  }
+  50% {
+    transform: translateX(-20%);
+    opacity: 1;
   }
   100% {
     transform: translateX(0);
-    opacity: 1;
+    opacity: 0;
   }
 }
 
@@ -58,8 +69,9 @@
   word-spacing: 100%;
   text-align: justify;
   opacity: 0;
-  animation: slideLeft 5s ease forwards;
-  animation-delay: 7s;
+  animation: slideLeft 500ms ease forwards;
+  animation-delay: 2s;
+  animation-duration: 40s;
 }
 
 .homeAbout:nth-child(2) {
@@ -75,9 +87,11 @@
   word-spacing: 100%;
   opacity: 0;
   text-align: justify;
-  animation: slideRight 5s ease forwards;
-  animation-delay: 13s;
+  animation: slideRight 500ms ease forwards;
+  animation-delay: 5s;
+  animation-duration: 36s;
 }
+
 .homeAbout:nth-child(3) {
   position: absolute;
   display: flex;
@@ -91,6 +105,7 @@
   word-spacing: 100%;
   text-align: justify;
   opacity: 0;
-  animation: slideLeft 5s ease forwards;
-  animation-delay: 19s;
+  animation: slideLeft 500ms ease forwards;
+  animation-delay: 8s;
+  animation-duration: 30s;
 }
